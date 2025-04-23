@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bricklab - Affordable LEGO Sets</title>
+  <script src="https://js.stripe.com/v3/"></script>
+  <script defer src="app.js"></script>
+  <link rel="icon" href="favicon.ico" />
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-900 overflow-x-hidden">
+  <header class="bg-white shadow p-4 flex justify-between items-center">
+    <div class="flex items-center space-x-2">
+      <h1 class="text-xl font-bold">Bricklab</h1>
+    </div>
+    <nav class="flex items-center space-x-4 relative">
+      <div class="relative">
+        <button id="searchToggle" class="text-gray-600 hover:text-gray-900 focus:outline-none">🔍</button>
+        <input type="text" id="searchInput" placeholder="Search..."
+               class="hidden absolute right-0 top-10 w-64 p-2 border border-gray-300 rounded shadow-sm bg-white z-50"/>
+      </div>
+      <button id="cartBtn" class="relative">🛒 <span id="cartCount"
+        class="bg-red-500 text-white text-xs rounded-full px-2 absolute -top-2 -right-2">0</span></button>
+    </nav>
+  </header>
+
+  <main class="p-6">
+    <section class="text-center mb-8">
+      <h2 class="text-2xl font-semibold">Affordable LEGO Sets Delivered to Your Door</h2>
+      <p class="text-gray-600">Explore our range of LEGO sets at prices lower than retail!</p>
+    </section>
+
+    <section class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-6 rounded text-center">
+      <p class="font-medium">🎉 Bulk discount - buy 10+ for £1–£2 off each</p>
+    </section>
+
+    <section id="products" class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <!-- Products dynamically loaded -->
+    </section>
+  </main>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
