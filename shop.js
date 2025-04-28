@@ -314,7 +314,7 @@ const products = [
   
   
   
-  const cart = JSON.parse(localStorage.getItem('cart')) || []; // Load saved cart if available
+ const cart = JSON.parse(localStorage.getItem('cart')) || []; // Load saved cart if available
   let currentThemeFilter = "all";
   let currentSearchTerm = "";
   
@@ -415,17 +415,23 @@ const products = [
       const newQty = existing.qty + quantity;
       if (newQty > 20) {
         alert("You can only purchase a maximum of 20 units per item.");
-        existing.qty = 20; // ✅ Cap to 20 if over
+        existing.qty = 20;
       } else {
         existing.qty = newQty;
       }
     } else {
-      cart.push({ ...item, qty: quantity > 20 ? 20 : quantity }); // ✅ Cap new add to 20
+      cart.push({ ...item, qty: quantity > 20 ? 20 : quantity });
     }
   
     updateCart();
-    saveCart(); // Save after updating
-  }
+    saveCart();
+  
+    // Reset quantity input
+    qtyInput.value = 1;
+  
+    // ✅ Show the add-to-cart confirmation modal
+    showAddToCartModal(item, quantity);
+  }  
   
   function saveCart() {
     localStorage.setItem('cart', JSON.stringify(cart));
@@ -490,7 +496,41 @@ const products = [
     cartTotal.textContent = `£${total.toFixed(2)}`;
     cartModal.classList.remove("hidden");
   }
+
+  function showAddToCartModal(item, quantity) {
+    const modal = document.getElementById("addToCartModal");
+    const details = document.getElementById("addToCartDetails");
   
+    const totalPrice = (item.price * quantity).toFixed(2);
+  
+    details.innerHTML = `
+      <img src="${item.image}" alt="${item.name}" class="mx-auto mb-4 w-24 h-24 object-contain">
+      <p class="font-semibold">${item.name}</p>
+      <p class="text-gray-600 mb-1">Qty: ${quantity}</p>
+      <p class="text-lg font-bold">£${totalPrice}</p>
+    `;
+  
+    modal.classList.remove("hidden");
+  }
+  
+
+function showAddToCartModal(item, quantity) {
+  const modal = document.getElementById("addToCartModal");
+  const details = document.getElementById("addToCartDetails");
+
+  const totalPrice = (item.price * quantity).toFixed(2);
+
+  details.innerHTML = `
+    <img src="${item.image}" alt="${item.name}" class="mx-auto mb-4 w-32 h-32 object-contain">
+    <p class="font-semibold">${item.name}</p>
+    <p class="text-gray-600 mb-2">Qty: ${quantity}</p>
+    <p class="text-lg font-bold">£${totalPrice}</p>
+  `;
+
+  modal.classList.remove("hidden");
+}
+
+
   function closeCart() {
     document.getElementById("cartModal").classList.add("hidden");
   }
@@ -517,11 +557,25 @@ const products = [
       clearCart();
     }
   });
-  
-  document.getElementById("searchInput").addEventListener("input", (e) => {
-    currentSearchTerm = e.target.value;
-    renderProducts(currentThemeFilter, currentSearchTerm);
-  });
+
+// Close Add-to-Cart popup
+document.getElementById("closeAddToCartModal").addEventListener("click", () => {
+  document.getElementById("addToCartModal").classList.add("hidden");
+});
+
+// Continue Shopping button
+document.getElementById("continueShoppingBtn").addEventListener("click", () => {
+  document.getElementById("addToCartModal").classList.add("hidden");
+});
+
+// View Cart button
+document.getElementById("viewCartBtn").addEventListener("click", () => {
+  document.getElementById("addToCartModal").classList.add("hidden"); // ✅ Close popup first
+  setTimeout(() => {
+    openCart(); // ✅ Then open cart (slight delay for smoother transition)
+  }, 100); 
+});
+
   
   populateThemeFilter();
   renderProducts(currentThemeFilter, currentSearchTerm);
@@ -539,3 +593,4 @@ const products = [
       searchInput.classList.add("hidden");
     }
   });
+
