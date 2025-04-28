@@ -130,7 +130,7 @@ const products = [
       price: 15,
       id: "75378",
       theme: "Star Wars",
-      inStock: true,
+      inStock: false,
       image: "https://www.lego.com/cdn/cs/set/assets/blt1018fcf7b60fbc62/75378.png?format=webply&fit=bounds&quality=80&width=400&height=400&dpr=2"
     },
     {
@@ -154,7 +154,7 @@ const products = [
       price: 12,
       id: "75373",
       theme: "Star Wars",
-      inStock: true,
+      inStock: false,
       image: "https://www.lego.com/cdn/cs/set/assets/blt1e371bed414e18b3/75373.png?format=webply&fit=bounds&quality=80&width=400&height=400&dpr=2"
     },
   
