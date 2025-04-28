@@ -314,7 +314,7 @@ const products = [
   
   
   
- const cart = JSON.parse(localStorage.getItem('cart')) || []; // Load saved cart if available
+const cart = JSON.parse(localStorage.getItem('cart')) || []; // Load saved cart if available
   let currentThemeFilter = "all";
   let currentSearchTerm = "";
   
@@ -356,35 +356,41 @@ const products = [
     filtered.forEach((product, index) => {
       const isOnSale = getDiscountedPrice({ ...product, qty: 10 }) < product.price;
       const card = document.createElement("div");
-      card.className = "bg-white rounded-lg shadow hover:shadow-md p-4 flex flex-col";
+      card.className = "bg-white rounded-lg shadow hover:shadow-md p-4 flex flex-col justify-between h-full";
       card.innerHTML = `
-        <div class="relative mb-4">
-          ${!product.inStock 
-            ? `<span class="absolute top-2 left-2 bg-gray-500 text-white text-xs px-2 py-1 rounded">Out of Stock</span>` 
-            : isOnSale 
-              ? `<span class="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded">SALE</span>` 
-              : ""
-          }
-          <div class="relative mb-4 bg-gray-100 w-full h-64 rounded overflow-hidden flex items-center justify-center">
-            <img src="${product.image}" alt="${product.name}" class="object-contain w-full h-full" onerror="this.src='images/placeholder.png'; this.classList.add('opacity-50')" />
-          </div>
-        </div>
+<div class="relative mb-4 bg-gray-100 w-full h-64 rounded overflow-hidden flex items-center justify-center">
+  <img src="${product.image}" alt="${product.name}" class="object-contain w-full h-full" onerror="this.src='images/placeholder.png'; this.classList.add('opacity-50')" />
+  
+  ${!product.inStock 
+    ? `<div class="absolute inset-0 bg-gray-500 bg-opacity-70 flex items-center justify-center">
+         
+       </div>` 
+    : ""
+  }
+</div>
         <h3 class="font-medium text-lg mb-1">${product.name}</h3>
         <p class="text-gray-500 text-sm mb-1">Theme: ${product.theme}</p>
         <p class="mb-2 font-semibold">£${product.price.toFixed(2)}</p>
         ${isOnSale 
           ? `<p class="text-green-600 text-sm mb-2">Bulk discount available!</p>` 
           : ""}
-        <div class="flex items-center space-x-2 mb-2">
-          <button onclick="changeQty(${index}, -1)" class="px-2 py-1 bg-gray-200 rounded"${!product.inStock ? " disabled" : ""}>−</button>
-          <input id="qty-${index}" type="number" value="1" min="1" class="w-12 text-center border border-gray-300 rounded" ${!product.inStock ? "disabled" : ""}/>
-          <button onclick="changeQty(${index}, 1)" class="px-2 py-1 bg-gray-200 rounded"${!product.inStock ? " disabled" : ""}>+</button>
-        </div>
-        <button onclick="addToCart(${index})" 
-          class="mt-auto ${product.inStock ? 'bg-blue-500 hover:bg-blue-600' : 'bg-gray-400 cursor-not-allowed'} text-white px-3 py-2 rounded transition"
-          ${!product.inStock ? "disabled" : ""}>
-          ${product.inStock ? "Add to Cart" : "Out of Stock"}
-        </button>
+
+<div class="flex flex-col items-start space-y-2 mt-auto w-full">
+  <div class="flex items-center space-x-2">
+    <button onclick="changeQty(${index}, -1)" class="px-2 py-1 bg-gray-200 rounded"${!product.inStock ? " disabled" : ""}>−</button>
+    <input id="qty-${index}" type="number" value="1" min="1" class="w-12 text-center border border-gray-300 rounded" ${!product.inStock ? "disabled" : ""}/>
+    <button onclick="changeQty(${index}, 1)" class="px-2 py-1 bg-gray-200 rounded"${!product.inStock ? " disabled" : ""}>+</button>
+  </div>
+  <button onclick="addToCart(${index})" 
+    class="w-full ${product.inStock ? 'bg-blue-500 hover:bg-blue-600' : 'bg-gray-400 cursor-not-allowed'} text-white px-3 py-2 rounded transition whitespace-nowrap"
+    ${!product.inStock ? "disabled" : ""}>
+    ${product.inStock ? "Add to Cart" : "Out of Stock"}
+  </button>
+</div>
+
+
+
+
       `;
       container.appendChild(card);
     });
@@ -593,4 +599,3 @@ document.getElementById("viewCartBtn").addEventListener("click", () => {
       searchInput.classList.add("hidden");
     }
   });
-
