@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" xcontent="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/css/style.css">
+  <title>Bricklab - Affordable LEGO Sets</title>
+  <script defer src="shop.js"></script>
+  <link rel="icon" href="favicon.ico" />
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-900 overflow-x-hidden">
+  <header class="bg-white shadow p-4 flex justify-between items-center">
+    <div class="flex items-center space-x-2">
+      <img src="https://i.ibb.co/vvMMLVkz/Bricklab.jpg" alt="Bricklab Logo" class="h-12 w-12">
+      <h1 class="text-xl font-bold">Bricklab</h1>
+    </div>
+    
+<nav class="flex items-center space-x-6 relative">
+  <!-- Page Links -->
+  <div class="flex items-center space-x-4">
+    <a href="shop.html" class="text-gray-700 hover:text-blue-500 font-medium">Shop</a>
+    <a href="about.html" class="text-gray-700 hover:text-blue-500 font-medium">About</a>
+  </div>
+
+  <!-- Spacer -->
+  <div class="flex-grow"></div>
+  <!-- Search Toggle Icon -->
+  <div class="relative">
+   <button id="searchToggle" class="focus:outline-none">
+  <img src="https://cdn-icons-png.flaticon.com/128/3031/3031293.png" alt="Search" class="h-6 w-6">
+</button>
+    <input
+      type="text"
+      id="searchInput"
+      placeholder="Search..."
+      class="hidden absolute right-0 top-10 w-64 p-2 border border-gray-300 rounded shadow-sm bg-white z-50"
+    />
+  </div>
+
+  <!-- Cart Button -->
+  <button id="cartBtn" class="relative">
+  <img src="https://cdn-icons-png.flaticon.com/128/3514/3514491.png" alt="Cart" class="h-6 w-6 inline-block">
+  <span id="cartCount" class="bg-red-500 text-white text-xs rounded-full px-2 absolute -top-2 -right-2">0</span>
+</button>
+</nav>
+
+  </header>
+
+  <main class="p-6">
+    <section class="text-center mb-8">
+      <h2 class="text-2xl font-semibold">Affordable LEGO Sets Delivered to Your Door</h2>
+      <p class="text-gray-600">Explore our range of LEGO sets at prices lower than retail!</p>
+    </section>
+
+    <!-- ✅ Discount Banner -->
+<section class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-6 rounded text-center">
+  <p class="font-medium">🎉 Bulk Discount: Buy 10+ of the same LEGO set over £10 and get £1 off per item! (Max £2 per item)</p>
+</section>
+
+<!-- 👇 Place this right above the product grid -->
+<section id="products" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+  <!-- Products dynamically loaded -->
+</section>
+
+<!-- 🛒 Cart Modal (updated with savings line) -->
+<div id="cartModal" class="fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center z-50">
+  <div class="bg-white p-6 rounded-lg w-full max-w-lg">
+    <h2 class="text-xl font-bold mb-4">Your Cart</h2>
+    <div id="cartItems" class="space-y-4 max-h-64 overflow-y-auto"></div>
+    <div id="cartSavings" class="text-right text-green-600 font-medium mt-2"></div>
+    <div class="flex justify-between mt-4">
+      <span class="font-bold">Total:</span>
+      <span id="cartTotal">£0.00</span>
+    </div>
+    <div class="flex justify-between mt-6">
+      <button id="clearCartBtn" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Clear Cart</button>
+      <div class="space-x-2">
+        <button id="checkoutBtn" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Checkout</button>
+        <button id="closeCart" class="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <section id="products" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <!-- Products dynamically loaded -->
+    </section>
+
+
+  <!-- Cart Modal -->
+  <div id="cartModal" class="fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center z-50">
+    <div class="bg-white p-6 rounded-lg w-full max-w-lg">
+      <h2 class="text-xl font-bold mb-4">Your Cart</h2>
+      <div id="cartItems" class="space-y-4 max-h-64 overflow-y-auto"></div>
+      <div class="flex justify-between mt-4">
+        <span class="font-bold">Total:</span>
+        <span id="cartTotal">£0.00</span>
+      </div>
+  <div class="flex justify-between mt-6">
+  <button id="clearCartBtn" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Clear Cart</button>
+  <div class="space-x-2">
+    <button id="checkoutBtn" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Checkout</button>
+    <button id="closeCart" class="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400">Close</button>
+  </div>
+</div>
+
+  </div>
+</div>
+
+      </div>
+    </div>
+  </div>
+  
+    <!-- Contact Section -->
+  <footer class="bg-white border-t mt-12 p-6 text-center text-sm text-gray-600">
+    <div class="max-w-4xl mx-auto space-y-2">
+      <p class="font-semibold text-gray-800">Contact</p>
+      <p>Email: <a href="ryansbricksandfigs@gmail.com" class="text-blue-500 hover:underline">ryansbricksandfigs@gmail.com</a></p>
+      <p>Instagram: <a href="https://www.instagram.com/bricklab.co.uk" target="_blank" class="text-blue-500 hover:underline">@bricklab.co.uk</a></p>
+      <p>Based in the UK 🇬🇧 | Ships nationwide</p>
+    </div>
+  </footer>
+</body>
+</html>
