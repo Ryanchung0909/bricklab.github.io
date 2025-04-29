@@ -345,6 +345,26 @@
 </section>
   </main>
 
+  <!-- Cart Modal -->
+  <div id="cartModal" class="fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center z-50">
+    <div class="bg-white p-6 rounded-lg w-full max-w-lg">
+      <h2 class="text-xl font-bold mb-4">Your Cart</h2>
+      <div id="cartItems" class="space-y-4 max-h-64 overflow-y-auto"></div>
+      <div id="cartSavings" class="text-right text-green-600 font-medium mt-2"></div>
+      <div class="flex justify-between mt-4">
+        <span class="font-bold">Total:</span>
+        <span id="cartTotal">£0.00</span>
+      </div>
+      <div class="flex justify-between mt-6">
+        <button id="clearCartBtn" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Clear Cart</button>
+        <div class="space-x-2">
+          <button id="checkoutBtn" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Checkout</button>
+          <button id="closeCart" class="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Footer -->
   <footer class="bg-white border-t mt-12 p-6 text-center text-sm text-gray-600">
     <div class="max-w-4xl mx-auto space-y-2">
@@ -356,42 +376,99 @@
   </footer>
 
   <script>
-    document.querySelectorAll('.faq-toggle').forEach((button, index) => {
-      button.addEventListener('click', () => {
-        const allContents = document.querySelectorAll('.faq-content');
-        const allButtons = document.querySelectorAll('.faq-toggle span');
-    
-        allContents.forEach((content, i) => {
-          if (i === index) {
-            content.classList.toggle('hidden');
-            allButtons[i].textContent = content.classList.contains('hidden') ? '+' : '−';
-          } else {
-            content.classList.add('hidden');
-            allButtons[i].textContent = '+';
-          }
-        });
-      });
-    });
-
-    document.querySelectorAll('.faq-toggle').forEach((button, index) => {
-  button.addEventListener('click', () => {
-    const allContents = document.querySelectorAll('.faq-content');
-    const allButtons = document.querySelectorAll('.faq-toggle span');
-
-    allContents.forEach((content, i) => {
-      if (i === index) {
-        content.classList.toggle('show');
-        allButtons[i].textContent = content.classList.contains('show') ? '−' : '+';
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  
+    function getDiscountedPrice(item) {
+      if (item.price <= 10) return item.price;
+      const discountSteps = Math.floor(item.qty / 10);
+      const discountPerSet = Math.min(discountSteps, 2);
+      return item.price - discountPerSet;
+    }
+  
+    function updateCart() {
+      const totalItems = cart.reduce((sum, p) => sum + p.qty, 0);
+      document.getElementById("cartCount").textContent = totalItems;
+    }
+  
+    function openCart() {
+      const cartModal = document.getElementById("cartModal");
+      const cartItems = document.getElementById("cartItems");
+      const cartTotal = document.getElementById("cartTotal");
+      const cartSavings = document.getElementById("cartSavings");
+  
+      cartItems.innerHTML = "";
+      if (cartSavings) cartSavings.innerHTML = "";
+  
+      let total = 0;
+      let totalSavings = 0;
+  
+      if (cart.length === 0) {
+        cartItems.innerHTML = `<p class="text-center text-gray-500">Your cart is empty.</p>`;
       } else {
-        content.classList.remove('show');
-        allButtons[i].textContent = '+';
+        cart.forEach(item => {
+          const originalTotal = item.price * item.qty;
+          const discountedPrice = getDiscountedPrice(item);
+          const itemTotal = discountedPrice * item.qty;
+          const savings = originalTotal - itemTotal;
+  
+          total += itemTotal;
+          totalSavings += savings;
+  
+          const div = document.createElement("div");
+          div.className = "flex justify-between items-center";
+          div.innerHTML = `
+            <div>
+              <p class="font-medium">${item.name}</p>
+              <p class="text-sm text-gray-500">Qty: ${item.qty}
+                ${savings >= 0.01 ? '<span class="ml-2 text-green-600">✓ Discount Applied</span>' : ''}</p>
+            </div>
+            <div>£${itemTotal.toFixed(2)}</div>
+          `;
+          cartItems.appendChild(div);
+        });
+  
+        if (cartSavings && totalSavings > 0) {
+          cartSavings.textContent = `You saved £${totalSavings.toFixed(2)} with bulk discounts!`;
+        }
+      }
+  
+      cartTotal.textContent = `£${total.toFixed(2)}`;
+      cartModal.classList.remove("hidden");
+    }
+  
+    function saveCart() {
+      localStorage.setItem('cart', JSON.stringify(cart));
+    }
+  
+    function clearCart() {
+      if (confirm("Are you sure you want to clear your cart?")) {
+        cart.length = 0;
+        saveCart();
+        updateCart();
+        openCart();
+      }
+    }
+  
+    document.getElementById("cartBtn").addEventListener("click", openCart);
+    document.getElementById("closeCart").addEventListener("click", () => {
+      document.getElementById("cartModal").classList.add("hidden");
+    });
+  
+    document.getElementById("checkoutBtn").addEventListener("click", () => {
+      saveCart();
+      window.location.href = "checkout.html";
+    });
+  
+    document.addEventListener("click", (e) => {
+      if (e.target && e.target.id === "clearCartBtn") {
+        clearCart();
       }
     });
-  });
-});
+  
+    updateCart(); // Show item count on load
+  </script>
+  
 
-
-</script>
 </body>
 
 </html>
