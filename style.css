@@ -3,3 +3,11 @@ button:active {
     transition: transform 0.05s ease;
   }
   
+  /* Prevent double-tap zoom globally on mobile */
+html, body {
+  touch-action: manipulation;
+}
+
+button, input[type="button"], input[type="submit"] {
+  touch-action: manipulation;
+}
