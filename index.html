@@ -106,4 +106,21 @@
 </div>
 
 </body>
+<script>
+  document.addEventListener('touchstart', function preventZoom(e) {
+    if (e.touches.length > 1) {
+      e.preventDefault(); // pinch-zoom
+    }
+  }, { passive: false });
+
+  let lastTouch = 0;
+  document.addEventListener('touchend', function(e) {
+    const now = new Date().getTime();
+    if (now - lastTouch <= 300) {
+      e.preventDefault(); // double-tap
+    }
+    lastTouch = now;
+  }, { passive: false });
+</script>
+
 </html>
