@@ -314,7 +314,8 @@ const products = [
   
   
   
-const cart = JSON.parse(localStorage.getItem('cart')) || []; 
+const cart = JSON.parse(localStorage.getItem('cart')) || [];
+updateCart(); // ✅ Fixes the counter showing "0" on initial load
   let currentThemeFilter = "all";
   let currentSearchTerm = "";
   
